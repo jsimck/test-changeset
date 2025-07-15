@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
 
 /**
  * Script to get all tags that triggered the CI job
  * This script can be run in GitHub Actions and will output the tags
  */
 
-function getAllTags() {
+export function getAllTags() {
   try {
     // Get the current tag from GitHub context if available
     const currentTag = process.env.GITHUB_REF_NAME;
@@ -40,8 +41,6 @@ function getAllTags() {
 }
 
 // If script is run directly (not imported)
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   getAllTags();
 }
-
-module.exports = { getAllTags };

@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "changeset": "changeset",
     "get-tags": "node scripts/get-tags.js",
-    "create-releases": "node scripts/create-releases.js",
+    "create-releases": "node scripts/create-releases.mjs",
     "release": "npm run release:prepare && npm run release:push",
     "release:prepare": "changeset version && npm i --package-lock-only --ignore-scripts",
     "release:push": "git add .changeset package-lock.json packages/*/CHANGELOG.md packages/*/package.json && git commit -m 'Publish' && changeset tag && git push --follow-tags"
@@ -28,7 +28,7 @@
   "description": "",
   "devDependencies": {
     "@changesets/cli": "^2.29.5",
-    "@actions/github": "^6.0.0",
-    "glob": "^11.0.0"
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0"
   }
 }
