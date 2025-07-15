@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+    branches:
+      - 'main'  # Also trigger on main branch pushes (in case tags are pushed with commits)
+
+jobs:
+  release:
+    name: Create Releases
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required to create releases
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history and tags
+
+      - uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+          node-version: '24'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Get Tags for Current Commit
+        id: check-tags
+        run: |
+          TAGS_FOR_COMMIT=$(git tag --points-at HEAD | tr '\n' ',' | sed 's/,$//')
+          echo "tags-for-commit=$TAGS_FOR_COMMIT"
+          echo "tags-for-commit=$TAGS_FOR_COMMIT" >> $GITHUB_OUTPUT
+          echo "has-tags=$([ -n "$TAGS_FOR_COMMIT" ] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Releases
+        if: steps.check-tags.outputs.has-tags == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Creating releases for tags: ${{ steps.check-tags.outputs.tags-for-commit }}"
+          npm run create-releases
