@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    tags:
+      - '*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history and tags
+
+      - uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+          node-version: '24'
+
+      - name: Install Dependencies
+        shell: bash
+        run: npm ci
+
+      - name: Get Tags Information
+        shell: bash
+        run: |
+          echo "Getting tags information..."
+          node scripts/get-tags.js
+
+          # You can also capture the output for use in subsequent steps
+          echo "TAGS_OUTPUT<<EOF" >> $GITHUB_ENV
+          node scripts/get-tags.js >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Use Tags Information
+        shell: bash
+        run: |
+          echo "Current tag: ${{ github.ref_name }}"
+          echo "Full ref: ${{ github.ref }}"
+          echo "Event name: ${{ github.event_name }}"
+
+          # Example of how to use the tags in your CI logic
+          echo "Running CI logic with tag information..."
+          # Add your actual CI logic here
