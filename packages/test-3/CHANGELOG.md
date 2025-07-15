@@ -1,5 +1,11 @@
 # @test-ns/test-3
 
+## 1.0.4
+
+### Patch Changes
+
+- b843665: Test
+
 ## 1.0.3
 
 ### Patch Changes

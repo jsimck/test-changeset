@@ -1,5 +1,11 @@
 # @test-ns/test-2
 
+## 1.1.1
+
+### Patch Changes
+
+- b843665: Test
+
 ## 1.1.0
 
 ### Minor Changes
