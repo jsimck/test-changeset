@@ -1,5 +1,11 @@
 # @test-ns/test-2
 
+## 1.1.0
+
+### Minor Changes
+
+- f452b91: Just minor release
+
 ## 1.0.3
 
 ### Patch Changes
