@@ -3,7 +3,6 @@
 import { execSync } from 'child_process';
 import { readFileSync, existsSync, globSync } from 'fs';
 import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
 import * as core from '@actions/core';
 import { getOctokit, context } from '@actions/github';
 
