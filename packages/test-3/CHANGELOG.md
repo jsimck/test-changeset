@@ -1,5 +1,11 @@
 # @test-ns/test-3
 
+## 1.0.5
+
+### Patch Changes
+
+- 8d4c60a: Test release action
+
 ## 1.0.4
 
 ### Patch Changes
