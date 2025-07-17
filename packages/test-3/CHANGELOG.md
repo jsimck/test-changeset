@@ -1,5 +1,11 @@
 # @test-ns/test-3
 
+## 1.0.6
+
+### Patch Changes
+
+- cd3ef37: Test tsup
+
 ## 1.0.5
 
 ### Patch Changes
